@@ -33,10 +33,10 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.id = new System.Windows.Forms.ColumnHeader();
-            this.name = new System.Windows.Forms.ColumnHeader();
-            this.unitPrice = new System.Windows.Forms.ColumnHeader();
-            this.discontinued = new System.Windows.Forms.ColumnHeader();
+            this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.unitPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.discontinued = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // btnBrowse
