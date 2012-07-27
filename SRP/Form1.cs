@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SRP
 {
@@ -62,7 +63,6 @@ namespace SRP
     {
         private readonly string fileName;
 
-        private readonly IList<string[]> products = new List<string[]>();
 
         public ProductXMLReader(string fileName)
         {
@@ -71,33 +71,24 @@ namespace SRP
 
         public IEnumerable<string[]> ReadProducts()
         {
-            using (var fs = new FileStream(fileName, FileMode.Open))
+            var products = new List<string[]>();
+            var reader = XDocument.Load(fileName);
+
+            foreach (var product in reader.Root.Elements("product"))
             {
-                var reader = XmlReader.Create(fs);
-                while (reader.Read())
-                {
-                    readProductIfValidNode(reader);
-                }
+                var productArray = this.readProductFromElementAttributes(product);
+                products.Add(productArray);
             }
+
             return products;
         }
 
-        private void readProductIfValidNode(XmlReader reader)
+        private string[] readProductFromElementAttributes(XElement reader)
         {
-            if (reader.Name != "product")
-            {
-                return;
-            }
-            var productArray = readProductFromNodeAttributes(reader);
-            products.Add(productArray);
-        }
-
-        private string[] readProductFromNodeAttributes(XmlReader reader)
-        {
-            var id = reader.GetAttribute("id");
-            var name = reader.GetAttribute("name");
-            var unitPrice = reader.GetAttribute("unitPrice");
-            var discontinued = reader.GetAttribute("discontinued");
+            var id = (string)reader.Attribute("id");
+            var name = (string)reader.Attribute("name");
+            var unitPrice = (string)reader.Attribute("unitPrice");
+            var discontinued = (string)reader.Attribute("discontinued");
             return new[] { id, name, unitPrice, discontinued };
         }
     }
